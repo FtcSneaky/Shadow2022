@@ -4,6 +4,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DistanceSensor;
 import com.qualcomm.robotcore.hardware.Servo;
@@ -16,6 +17,7 @@ public class HelloWorld extends OpMode {
     double position;
     private DcMotor elevatorMotor = null;
     private DistanceSensor distanceSensor = null;
+    private ColorSensor colorSensor = null;
 
     @Override
     public void init() {
@@ -30,6 +32,7 @@ public class HelloWorld extends OpMode {
         position = 0;
         elevatorMotor = hardwareMap.get(DcMotor.class, "elevator_motor");
         distanceSensor = hardwareMap.get(DistanceSensor.class, "color_sensor");
+        colorSensor = hardwareMap.get(ColorSensor.class, "color_sensor");
 
     }
 
@@ -39,9 +42,9 @@ public class HelloWorld extends OpMode {
         double leftTrigger;
         double rightTrigger;
         double leftPower;
-        leftPower = gamepad1.left_stick_y;
+        leftPower = gamepad1.left_stick_y * .5;
         double rightPower;
-        rightPower = -gamepad1.right_stick_y;
+        rightPower = -gamepad1.right_stick_y * .5;
         leftDrive.setPower(leftPower);
         rightDrive.setPower(rightPower);
         if (gamepad2.a) {
@@ -60,6 +63,9 @@ public class HelloWorld extends OpMode {
 
         telemetry.addData("Left Trigger", leftTrigger);
         telemetry.addData("Right Trigger", rightTrigger);
+        telemetry.addData("Red: ", colorSensor.red());
+        telemetry.addData("Green: ", colorSensor.green());
+        telemetry.addData("Blue: ", colorSensor.blue());
         telemetry.update();
 
         if(pos >= 0){ //It is too low

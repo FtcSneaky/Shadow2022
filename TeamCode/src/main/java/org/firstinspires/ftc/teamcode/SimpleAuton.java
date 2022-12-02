@@ -44,9 +44,9 @@ public class SimpleAuton extends LinearOpMode {
             position = 0;
             clawMotor.setPosition(position);
 
-            while(distanceSensor.getDistance(DistanceUnit.CM) > 6){
-                leftDrive.setPower (-0.1);
-                rightDrive.setPower (0.1);
+            while(distanceSensor.getDistance(DistanceUnit.CM) > 3){
+                leftDrive.setPower (-0.05);
+                rightDrive.setPower (0.05);
             }
 
             color = getColor();
